@@ -26,7 +26,7 @@
 
         public string GetDate()
         {
-            Console.Write("Enter date (dd-mm-yyyy): ");
+            Console.Write("Enter date (mm-dd-yyyy): ");
 
             this.Date = Console.ReadLine();
 

@@ -1,4 +1,6 @@
-﻿namespace CodingTrackerConsole
+﻿using System.Globalization;
+
+namespace CodingTrackerConsole
 {
     internal class CodingTrackerModel
     {
@@ -26,6 +28,14 @@
         {
             get { return this._endTime; }
             set { this._endTime = value; }
+        }
+
+        public string GetDuration()
+        {
+            DateTime parsedStartTime = DateTime.ParseExact(StartTime, "HH:mm", null, DateTimeStyles.None);
+            DateTime parsedEndTime = DateTime.ParseExact(EndTime, "HH:mm", null, DateTimeStyles.None);
+
+            return parsedEndTime.Subtract(parsedStartTime).ToString();
         }
     }
 }

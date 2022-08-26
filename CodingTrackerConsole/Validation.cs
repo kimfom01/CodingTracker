@@ -2,29 +2,27 @@
 {
     internal class Validation
     {
-        UserInput input = new UserInput();
-        TimeOnly startTime;
-        TimeOnly endTime;
+        private TimeOnly StartTime;
+        private TimeOnly EndTime;
 
-        public bool IsValidDate()
+        public bool IsValidDate(string date)
         {
-            DateOnly date;
-            return DateOnly.TryParse(input.Date, out date);
+            return DateOnly.TryParseExact(date, "MM-dd-yyyy", out DateOnly Date);
         }
 
-        public bool IsValidStartTime()
+        public bool IsValidStartTime(string startTime)
         {
-            return TimeOnly.TryParse(input.StartTime, out startTime);
+            return TimeOnly.TryParse(startTime, out StartTime);
         }
 
-        public bool IsValidEndTime()
+        public bool IsValidEndTime(string endTime)
         {
-            return TimeOnly.TryParse(input.EndTime, out endTime);
+            return TimeOnly.TryParse(endTime, out EndTime);
         }
 
         public bool IsValidDuration()
         {
-            return startTime.CompareTo(endTime) < 0;
+            return StartTime.CompareTo(EndTime) < 0;
         }
     }
 }
