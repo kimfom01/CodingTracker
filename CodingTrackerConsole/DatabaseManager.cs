@@ -1,12 +1,13 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Configuration;
+using ConsoleTableExt;
 
 namespace CodingTrackerConsole
 {
     internal class DatabaseManager
     {
         private string? _connectionString = ConfigurationManager.AppSettings.Get("connectionString");
-        List<CodingTrackerModel> codingTrackerModels;
+        
 
         public void CreateDatabase()
         {
@@ -27,10 +28,8 @@ namespace CodingTrackerConsole
             }
         }
 
-        public void InsertRecord()
+        public void InsertRecord(string date, string startTime, string endTime)
         {
-            string date = "25-07-1999", startTime = "05:45", endTime = "06:25";
-
             using (var connection = new SqliteConnection(_connectionString))
             {
                 using (var command = connection.CreateCommand())
@@ -38,17 +37,15 @@ namespace CodingTrackerConsole
                     connection.Open();
 
                     command.CommandText = @$"INSERT INTO codingTracker (Date, StartTime, EndTime)
-                                            VALUES ({date}, {startTime}, {endTime})";
+                                            VALUES ('{date}', '{startTime}', '{endTime}')";
 
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void DeleteRecord()
+        public void DeleteRecord(string date)
         {
-            string date = "25-07-1999";
-
             using (var connection = new SqliteConnection(_connectionString))
             {
                 using (var command = connection.CreateCommand())
@@ -63,26 +60,36 @@ namespace CodingTrackerConsole
             }
         }
 
-        public void UpdateRecord()
+        public void UpdateRecord(string date, string? startTime, string? endTime)
         {
-            string date = "25-07-1999", startTime = "05:45", endTime = "06:25";
-
             using (var connection = new SqliteConnection(_connectionString))
             {
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
 
-                    command.CommandText = $@"UPATE codingTracker
-                                            SET Date = {date}, StartTime = {startTime}, EndTime = {endTime}";
+                    if (startTime is null)
+                    {
+                        command.CommandText = $@"UPATE codingTracker
+                                                SET Date = '{date}', EndTime = '{endTime}'
+                                                WHERE Date = '{date}'";
+                    }
+                    else if (endTime is null)
+                    {
+                        command.CommandText = $@"UPATE codingTracker
+                                                SET Date = '{date}', StartTime = '{startTime}'
+                                                WHERE Date = '{date}'";
+                    }
 
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void View()
+        public List<CodingTrackerModel> ReadFromDB()
         {
+            List<CodingTrackerModel> codingTrackerModels = new();
+
             using (var connection = new SqliteConnection(_connectionString))
             {
                 using (var command = connection.CreateCommand())
@@ -97,11 +104,27 @@ namespace CodingTrackerConsole
                     {
                         while (reader.Read())
                         {
-                            codingTrackerModels.Add(new CodingTrackerModel(reader["Date"].ToString(), reader["StartTime"].ToString(), reader["EndTime"].ToString()));
+                            var models = new CodingTrackerModel();
+                            models.Date = (string)reader["Date"];
+                            models.StartTime = (string)reader["StartTime"];
+                            models.EndTime = (string)reader["EndTime"];
+
+                            codingTrackerModels.Add(models);
                         }
+
+                        //foreach (var item in codingTrackerModels)
+                        //{
+                        //    Console.WriteLine(item.Date + " - " + item.StartTime + " | " + item.EndTime);
+                        //}
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nYou don't have any records!\n");
                     }
                 }
             }
+
+            return codingTrackerModels;
         }
     }
 }

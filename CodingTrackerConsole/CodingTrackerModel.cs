@@ -8,12 +8,6 @@ namespace CodingTrackerConsole
         private string _startTime;
         private string _endTime;
 
-        public CodingTrackerModel(string date, string startTime, string endtime)
-        {
-            this.Date = date;
-            this.StartTime = startTime;
-            this.EndTime = endtime;
-        }
         public string Date
         {
             get { return this._date; }
