@@ -8,7 +8,6 @@ namespace CodingTrackerConsole
     {
         private string? _connectionString = ConfigurationManager.AppSettings.Get("connectionString");
         
-
         public void CreateDatabase()
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -70,13 +69,13 @@ namespace CodingTrackerConsole
 
                     if (startTime is null)
                     {
-                        command.CommandText = $@"UPATE codingTracker
+                        command.CommandText = $@"UPDATE codingTracker
                                                 SET Date = '{date}', EndTime = '{endTime}'
                                                 WHERE Date = '{date}'";
                     }
                     else if (endTime is null)
                     {
-                        command.CommandText = $@"UPATE codingTracker
+                        command.CommandText = $@"UPDATE codingTracker
                                                 SET Date = '{date}', StartTime = '{startTime}'
                                                 WHERE Date = '{date}'";
                     }

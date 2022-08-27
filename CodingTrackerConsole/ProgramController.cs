@@ -11,6 +11,7 @@ namespace CodingTrackerConsole
         static DatabaseManager dbManager = new();
         static UserInput input = new();
         static Validation dateTimeValidation = new();
+        static TableVisualizationEngine displayRecords = new();
 
         static void DisplayMenu()
         {
@@ -94,8 +95,18 @@ namespace CodingTrackerConsole
             dbManager.DeleteRecord(date);
         }
 
+        static void UpdateContextMenu()
+        {
+            Console.WriteLine("Choose what to update: ");
+            Console.WriteLine("s to Update StartTime");
+            Console.WriteLine("e to Update EndTime");
+            Console.WriteLine("b to Go Back");
+        }
+
         static void SelectRecordToUpdate()
         {
+            displayRecords.View();
+
             string? startTime, endTime;
             dbManager.ReadFromDB();
             while (!dateTimeValidation.IsValidDate(input.GetDate()))
@@ -135,18 +146,8 @@ namespace CodingTrackerConsole
             }
         }
 
-        static void UpdateContextMenu()
-        {
-            Console.WriteLine("Choose what to update: ");
-            Console.WriteLine("s to Update StartTime");
-            Console.WriteLine("e to Update EndTime");
-            Console.WriteLine("c to Cancel Operation");
-        }
-
         static void ViewListOfRecords()
         {
-            TableVisualizationEngine displayRecords = new();
-
             displayRecords.View();
         }
     }
