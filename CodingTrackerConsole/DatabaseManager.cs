@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Configuration;
-using ConsoleTableExt;
 
 namespace CodingTrackerConsole
 {
@@ -60,7 +59,7 @@ namespace CodingTrackerConsole
             }
         }
 
-        public void UpdateRecord(int id, string? date, string? startTime, string? endTime)
+        public void UpdateRecord(int id, string? date, string? startTime, string? endTime, string? duration)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -74,22 +73,16 @@ namespace CodingTrackerConsole
                                                 SET Date = '{date}'
                                                 WHERE Id = {id}";
                     }
-                    else if (date is null && endTime is null)
+                    else if (date is null)
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET StartTime = '{startTime}'
-                                                WHERE Id = {id}";
-                    }
-                    else if (date is null && startTime is null)
-                    {
-                        command.CommandText = $@"UPDATE codingTracker
-                                                SET EndTime = '{endTime}'
+                                                SET StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
                                                 WHERE Id = {id}";
                     }
                     else
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET Date = '{date}', StartTime = '{startTime}', EndTime = '{endTime}'
+                                                SET Date = '{date}', StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
                                                 WHERE Id = {id}";
                     }
 

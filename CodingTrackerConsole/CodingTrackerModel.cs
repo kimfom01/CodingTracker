@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace CodingTrackerConsole
+﻿namespace CodingTrackerConsole
 {
     internal class CodingTrackerModel
     {

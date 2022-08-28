@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodingTrackerConsole
+﻿namespace CodingTrackerConsole
 {
     public class ProgramController
     {
@@ -29,7 +23,7 @@ namespace CodingTrackerConsole
             Console.Write("Your choice? ");
         }
 
-        static public void GetUserInput()
+        static public void StartProgram()
         {
             dbManager.CreateDatabase();
 
@@ -55,7 +49,6 @@ namespace CodingTrackerConsole
                         Console.WriteLine("Wrong input!");
                         break;
                 }
-
                 DisplayMenu();
                 choice = Console.ReadLine();
             }
@@ -63,51 +56,56 @@ namespace CodingTrackerConsole
 
         static void GetRecordsToInsert()
         {
-            while (!dateTimeValidation.IsValidDate(input.GetDate()))
-            {
-                Console.WriteLine("Invalid date!");
-            }
-            string date = input.Date;
+            Console.Clear();
 
-            while (!dateTimeValidation.IsValidStartTime(input.GetStartTime()))
-            {
-                Console.WriteLine("Invalid time");
-            }
-            string startTime = input.StartTime;
+            string date = GetValidDate();
 
-            while (!dateTimeValidation.IsValidEndTime(input.GetEndTime()))
-            {
-                Console.WriteLine("Invalid time");
-            }
-            string endTime = input.EndTime;
+            string startTime = GetValidStartTime();
+
+            string endTime = GetValidEndTime();
 
             string duration = input.GetDuration();
 
             dbManager.InsertRecord(date, startTime, endTime, duration);
+
+            ViewListOfRecords();
         }
 
-        // TODO: Work on the context menu
-
-        static void DeleteContextMenu()
+        static void DisplayDeleteContextMenu()
         {
             Console.WriteLine("b to Go Back");
-            Console.WriteLine("Enter Id or record to delete: ");
+            Console.WriteLine("d to Delete Record: ");
         }
 
         static void GetRecordsToDelete()
         {
-            Console.Write("Enter Id to update: ");
-            int id = Int32.Parse(Console.ReadLine());
+            Console.Clear();
+            ViewListOfRecords();
 
-            dbManager.DeleteRecord(id);
+            DisplayDeleteContextMenu();
+            string choice = Console.ReadLine();
+            while (choice != "b")
+            {
+                switch (choice)
+                {
+                    case "d":
+                        dbManager.DeleteRecord(GetId());
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Choice!");
+                        break;
+                }
+                DisplayDeleteContextMenu();
+                choice = Console.ReadLine();
+            }
+            ViewListOfRecords();
         }
 
         static void DisplayUpdateContextMenu()
         {
             Console.WriteLine("Choose what to update: ");
             Console.WriteLine("d to Update Date");
-            Console.WriteLine("s to Update StartTime");
-            Console.WriteLine("e to Update EndTime");
+            Console.WriteLine("t to Update StartTime/EndTime");
             Console.WriteLine("a to Update All");
             Console.WriteLine("b to Go Back");
 
@@ -116,9 +114,10 @@ namespace CodingTrackerConsole
 
         static void SelectRecordToUpdate()
         {
-            displayRecords.View();
+            Console.Clear();
+            ViewListOfRecords();
 
-            string? date, startTime, endTime;
+            string? date, startTime, endTime, duration;
             dbManager.ReadFromDB();
 
             Console.Write("Enter Id to update: ");
@@ -132,26 +131,27 @@ namespace CodingTrackerConsole
                 {
                     case "d":
                         date = GetValidDate();
-                        dbManager.UpdateRecord(id, date, null, null);
+                        dbManager.UpdateRecord(id, date, null, null, null);
                         break;
-                    case "s":
+                    case "t":
                         startTime = GetValidStartTime();
-                        dbManager.UpdateRecord(id, null, startTime, null);
-                        break;
-                    case "e":
                         endTime = GetValidEndTime();
-                        dbManager.UpdateRecord(id, null, null, endTime);
+                        duration = input.GetDuration();
+                        dbManager.UpdateRecord(id, null, startTime, endTime, duration);
                         break;
                     case "a":
                         date = GetValidDate();
                         startTime = GetValidStartTime();
                         endTime = GetValidEndTime();
-                        dbManager.UpdateRecord(id, date, startTime, endTime);
+                        duration = input.GetDuration();
+                        dbManager.UpdateRecord(id, date, startTime, endTime, duration);
                         break;
                     default:
-                        Console.WriteLine("Invalid choice!");
+                        Console.WriteLine("Invalid choice! Press Enter to continue...");
+                        Console.ReadLine();
                         break;
                 }
+                ViewListOfRecords();
                 DisplayUpdateContextMenu();
                 choice = Console.ReadLine();
             }
@@ -160,6 +160,11 @@ namespace CodingTrackerConsole
         static void ViewListOfRecords()
         {
             displayRecords.View();
+        }
+
+        static int GetId()
+        {
+            return Int32.Parse(Console.ReadLine());
         }
 
         static string GetValidDate()
