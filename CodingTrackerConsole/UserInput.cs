@@ -4,27 +4,11 @@ namespace CodingTrackerConsole
 {
     internal class UserInput
     {
-        private string _date;
-        private string _startTime;
-        private string _endTime;
+        public string Date { get; set; }
 
-        public string Date
-        {
-            get { return this._date; }
-            set { this._date = value; }
-        }
+        public string StartTime { get; set; }
 
-        public string StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-
-        public string EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
+        public string EndTime { get; set; }
 
         public string GetDate()
         {
