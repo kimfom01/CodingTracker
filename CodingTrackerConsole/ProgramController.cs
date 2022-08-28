@@ -171,7 +171,7 @@
         {
             while (!dateTimeValidation.IsValidDate(input.GetDate()))
             {
-                Console.WriteLine("Invalid date!");
+                Console.WriteLine("Invalid date! Expected format (mm-dd-yyyy)");
             }
 
             return input.Date;
@@ -181,7 +181,7 @@
         {
             while (!dateTimeValidation.IsValidStartTime(input.GetStartTime()))
             {
-                Console.WriteLine("Invalid time");
+                Console.WriteLine("Invalid time! Expected format (hh:mm)");
             }
 
             return input.StartTime;
@@ -191,7 +191,7 @@
         {
             while (!dateTimeValidation.IsValidEndTime(input.GetEndTime()))
             {
-                Console.WriteLine("Invalid time");
+                Console.WriteLine("Invalid time! Expected format (hh:mm)");
             }
 
             return input.EndTime;
