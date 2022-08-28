@@ -4,10 +4,17 @@ namespace CodingTrackerConsole
 {
     internal class CodingTrackerModel
     {
+        private long _id;
         private string _date;
         private string _startTime;
         private string _endTime;
         private string _duration;
+
+        public long Id 
+        { 
+            get { return this._id; } 
+            set { this._id = value; } 
+        }
 
         public string Date
         {

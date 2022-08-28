@@ -96,63 +96,63 @@ namespace CodingTrackerConsole
 
         static void GetRecordsToDelete()
         {
-            
-            while (!dateTimeValidation.IsValidDate(input.GetDate()))
-            {
-                Console.WriteLine("Invalid date!");
-            }
-            string date = input.Date;
+            Console.Write("Enter Id to update: ");
+            int id = Int32.Parse(Console.ReadLine());
 
-            dbManager.DeleteRecord(date);
+            dbManager.DeleteRecord(id);
         }
 
-        static void UpdateContextMenu()
+        static void DisplayUpdateContextMenu()
         {
             Console.WriteLine("Choose what to update: ");
+            Console.WriteLine("d to Update Date");
             Console.WriteLine("s to Update StartTime");
             Console.WriteLine("e to Update EndTime");
+            Console.WriteLine("a to Update All");
             Console.WriteLine("b to Go Back");
+
+            Console.Write("Your choice? ");
         }
 
         static void SelectRecordToUpdate()
         {
             displayRecords.View();
 
-            string? startTime, endTime;
+            string? date, startTime, endTime;
             dbManager.ReadFromDB();
-            while (!dateTimeValidation.IsValidDate(input.GetDate()))
-            {
-                Console.WriteLine("Invalid date!");
-            }
-            string date = input.Date;
 
-            UpdateContextMenu();
+            Console.Write("Enter Id to update: ");
+            int id = Int32.Parse(Console.ReadLine());
+
+            DisplayUpdateContextMenu();
             string choice = Console.ReadLine();
-            while (choice != "c")
+            while (choice != "b")
             {
                 switch (choice)
                 {
+                    case "d":
+                        date = GetValidDate();
+                        dbManager.UpdateRecord(id, date, null, null);
+                        break;
                     case "s":
-                        while (!dateTimeValidation.IsValidStartTime(input.GetStartTime()))
-                        {
-                            Console.WriteLine("Invalid time");
-                        }
-                        startTime = input.StartTime;
-                        dbManager.UpdateRecord(date, startTime, null);
+                        startTime = GetValidStartTime();
+                        dbManager.UpdateRecord(id, null, startTime, null);
                         break;
                     case "e":
-                        while (!dateTimeValidation.IsValidEndTime(input.GetEndTime()))
-                        {
-                            Console.WriteLine("Invalid time");
-                        }
-                        endTime = input.EndTime;
-                        dbManager.UpdateRecord(date, null, endTime);
+                        endTime = GetValidEndTime();
+                        dbManager.UpdateRecord(id, null, null, endTime);
+                        break;
+                    case "a":
+                        date = GetValidDate();
+                        startTime = GetValidStartTime();
+                        endTime = GetValidEndTime();
+                        dbManager.UpdateRecord(id, date, startTime, endTime);
                         break;
                     default:
                         Console.WriteLine("Invalid choice!");
                         break;
                 }
-                UpdateContextMenu();
+                DisplayUpdateContextMenu();
                 choice = Console.ReadLine();
             }
         }
@@ -160,6 +160,36 @@ namespace CodingTrackerConsole
         static void ViewListOfRecords()
         {
             displayRecords.View();
+        }
+
+        static string GetValidDate()
+        {
+            while (!dateTimeValidation.IsValidDate(input.GetDate()))
+            {
+                Console.WriteLine("Invalid date!");
+            }
+
+            return input.Date;
+        }
+
+        static string GetValidStartTime()
+        {
+            while (!dateTimeValidation.IsValidStartTime(input.GetStartTime()))
+            {
+                Console.WriteLine("Invalid time");
+            }
+
+            return input.StartTime;
+        }
+
+        static string GetValidEndTime()
+        {
+            while (!dateTimeValidation.IsValidEndTime(input.GetEndTime()))
+            {
+                Console.WriteLine("Invalid time");
+            }
+
+            return input.EndTime;
         }
     }
 }

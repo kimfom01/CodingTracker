@@ -8,8 +8,11 @@ namespace CodingTrackerConsole
         public void View()
         {
             Console.Clear();
-            ConsoleTableBuilder.From(dbManager.ReadFromDB())
+            ConsoleTableBuilder
+                .From(dbManager.ReadFromDB())
                 .ExportAndWriteLine();
+
+            Console.WriteLine();
         }
     }
 }
