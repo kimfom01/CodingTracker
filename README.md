@@ -12,6 +12,11 @@ Console based CRUD application to keep track of coding hours. Developed using C#
 - [x] The user shouldn't input the duration of the session. It should be calculated based on the Start and End times, in a separate "CalculateDuration" method.
 - [x] The user should be able to input the start and end times manually.
 - [x] When reading from the database, you can't use an anonymous object, you have to read your table into a List of Coding Sessions.
+## Challenges (not completed yet)
+* Add the possibility of tracking the coding time via a stopwatch so the user can track the session as it happens.
+* Let the users filter their coding records per period (weeks, days, years) and/or order ascending or descending
+* Create reports where the users can see their total and average coding session per period.
+* Create the ability to set coding goals and show how far the users are from reaching their goal, along with how many hours a day they would have to code to reach their goal. You can do it via SQL queries or with C#.
 
 # Features
 * SQLite database connection
