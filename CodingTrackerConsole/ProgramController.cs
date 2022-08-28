@@ -81,11 +81,22 @@ namespace CodingTrackerConsole
             }
             string endTime = input.EndTime;
 
-            dbManager.InsertRecord(date, startTime, endTime);
+            string duration = input.GetDuration();
+
+            dbManager.InsertRecord(date, startTime, endTime, duration);
+        }
+
+        // TODO: Work on the context menu
+
+        static void DeleteContextMenu()
+        {
+            Console.WriteLine("b to Go Back");
+            Console.WriteLine("Enter Id or record to delete: ");
         }
 
         static void GetRecordsToDelete()
         {
+            
             while (!dateTimeValidation.IsValidDate(input.GetDate()))
             {
                 Console.WriteLine("Invalid date!");

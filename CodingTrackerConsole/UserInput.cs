@@ -1,4 +1,6 @@
-﻿namespace CodingTrackerConsole
+﻿using System.Globalization;
+
+namespace CodingTrackerConsole
 {
     internal class UserInput
     {
@@ -49,6 +51,14 @@
             this.EndTime = Console.ReadLine();
 
             return this.EndTime;
+        }
+
+        public string GetDuration()
+        {
+            DateTime parsedStartTime = DateTime.ParseExact(StartTime, "HH:mm", null, DateTimeStyles.None);
+            DateTime parsedEndTime = DateTime.ParseExact(EndTime, "HH:mm", null, DateTimeStyles.None);
+
+            return parsedEndTime.Subtract(parsedStartTime).ToString();
         }
     }
 }

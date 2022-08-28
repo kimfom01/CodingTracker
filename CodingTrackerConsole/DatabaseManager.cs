@@ -20,14 +20,15 @@ namespace CodingTrackerConsole
                                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                             Date TXT,
                                             StartTime TXT,
-                                            EndTime TXT)";
+                                            EndTime TXT,
+                                            Duration TXT)";
 
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void InsertRecord(string date, string startTime, string endTime)
+        public void InsertRecord(string date, string startTime, string endTime, string duration)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -35,8 +36,8 @@ namespace CodingTrackerConsole
                 {
                     connection.Open();
 
-                    command.CommandText = @$"INSERT INTO codingTracker (Date, StartTime, EndTime)
-                                            VALUES ('{date}', '{startTime}', '{endTime}')";
+                    command.CommandText = @$"INSERT INTO codingTracker (Date, StartTime, EndTime, Duration)
+                                            VALUES ('{date}', '{startTime}', '{endTime}', '{duration}')";
 
                     command.ExecuteNonQuery();
                 }
@@ -107,14 +108,10 @@ namespace CodingTrackerConsole
                             models.Date = (string)reader["Date"];
                             models.StartTime = (string)reader["StartTime"];
                             models.EndTime = (string)reader["EndTime"];
+                            models.Duration = (string)reader["Duration"];
 
                             codingTrackerModels.Add(models);
                         }
-
-                        //foreach (var item in codingTrackerModels)
-                        //{
-                        //    Console.WriteLine(item.Date + " - " + item.StartTime + " | " + item.EndTime);
-                        //}
                     }
                     else
                     {
