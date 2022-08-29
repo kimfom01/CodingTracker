@@ -24,6 +24,12 @@ Console based CRUD application to keep track of coding hours. Developed using C#
     - If no database exists, or the correct table does not exist they will be created.
 * CRUD DB functions
     - From the main menu users can Create, Read, Update or Delete entries.
+    
+# Things I learnt
+* Parsing DateTime
+* Seperation of concerns
+* Using an external library
+* Getting connection string from an external source (config file)
 
 # Resources
 * [ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
