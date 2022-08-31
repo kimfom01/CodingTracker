@@ -43,7 +43,7 @@ namespace CodingTrackerConsole
             }
         }
 
-        public void DeleteRecord(int id)
+        public void DeleteRecord(string date)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -52,14 +52,15 @@ namespace CodingTrackerConsole
                     connection.Open();
 
                     command.CommandText = @$"DELETE FROM codingTracker
-                                            WHERE Id = {id}";
+                                            WHERE Date = '{date}'";
 
                     command.ExecuteNonQuery();
                 }
             }
+            Console.Clear();
         }
 
-        public void UpdateRecord(int id, string? date, string? startTime, string? endTime, string? duration)
+        public void UpdateRecord(string oldDate, string? newDate, string? startTime, string? endTime, string? duration)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -70,20 +71,20 @@ namespace CodingTrackerConsole
                     if (startTime is null && endTime is null)
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET Date = '{date}'
-                                                WHERE Id = {id}";
+                                                SET Date = '{newDate}'
+                                                WHERE Date = '{oldDate}'";
                     }
-                    else if (date is null)
+                    else if (newDate is null)
                     {
                         command.CommandText = $@"UPDATE codingTracker
                                                 SET StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
-                                                WHERE Id = {id}";
+                                                WHERE Date = '{oldDate}'";
                     }
                     else
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET Date = '{date}', StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
-                                                WHERE Id = {id}";
+                                                SET Date = '{newDate}', StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
+                                                WHERE Date = '{oldDate}'";
                     }
 
                     command.ExecuteNonQuery();
@@ -110,7 +111,6 @@ namespace CodingTrackerConsole
                         while (reader.Read())
                         {
                             var models = new CodingTrackerModel();
-                            models.Id = (long)reader["Id"];
                             models.Date = (string)reader["Date"];
                             models.StartTime = (string)reader["StartTime"];
                             models.EndTime = (string)reader["EndTime"];

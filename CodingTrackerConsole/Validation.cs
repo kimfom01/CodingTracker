@@ -1,4 +1,6 @@
-﻿namespace CodingTrackerConsole
+﻿using System.Globalization;
+
+namespace CodingTrackerConsole
 {
     internal class Validation
     {
@@ -12,12 +14,12 @@
 
         public bool IsValidStartTime(string startTime)
         {
-            return TimeOnly.TryParse(startTime, out StartTime);
+            return TimeOnly.TryParseExact(startTime, "HH:mm", null, DateTimeStyles.None, out StartTime);
         }
 
         public bool IsValidEndTime(string endTime)
         {
-            return TimeOnly.TryParse(endTime, out EndTime);
+            return TimeOnly.TryParseExact(endTime, "HH:mm", null, DateTimeStyles.None, out EndTime);
         }
 
         public bool IsValidDuration()

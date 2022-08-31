@@ -4,7 +4,6 @@
     {
         static DatabaseManager dbManager = new();
         static UserInput input = new();
-        static Validation dateTimeValidation = new();
         static TableVisualizationEngine displayRecords = new();
 
         static void DisplayMenu()
@@ -58,11 +57,11 @@
         {
             Console.Clear();
 
-            string date = GetValidDate();
+            string date = input.GetDate();
 
-            string startTime = GetValidStartTime();
+            string startTime = input.GetStartTime();
 
-            string endTime = GetValidEndTime();
+            string endTime = input.GetEndTime();
 
             string duration = input.GetDuration();
 
@@ -89,10 +88,12 @@
                 switch (choice)
                 {
                     case "d":
-                        dbManager.DeleteRecord(GetId());
+                        dbManager.DeleteRecord(input.GetDate());
+                        ViewListOfRecords();
                         break;
                     default:
                         Console.WriteLine("Invalid Choice!");
+                        ViewListOfRecords();
                         break;
                 }
                 DisplayDeleteContextMenu();
@@ -117,11 +118,10 @@
             Console.Clear();
             ViewListOfRecords();
 
-            string? date, startTime, endTime, duration;
+            string? newDate, startTime, endTime, duration;
             dbManager.ReadFromDB();
 
-            Console.Write("Enter Id to update: ");
-            int id = Int32.Parse(Console.ReadLine());
+            string oldDate = input.GetDate();
 
             DisplayUpdateContextMenu();
             string choice = Console.ReadLine();
@@ -130,21 +130,21 @@
                 switch (choice)
                 {
                     case "d":
-                        date = GetValidDate();
-                        dbManager.UpdateRecord(id, date, null, null, null);
+                        newDate = input.GetDate();
+                        dbManager.UpdateRecord(oldDate, newDate, null, null, null);
                         break;
                     case "t":
-                        startTime = GetValidStartTime();
-                        endTime = GetValidEndTime();
+                        startTime = input.GetStartTime();
+                        endTime = input.GetEndTime();
                         duration = input.GetDuration();
-                        dbManager.UpdateRecord(id, null, startTime, endTime, duration);
+                        dbManager.UpdateRecord(oldDate, null, startTime, endTime, duration);
                         break;
                     case "a":
-                        date = GetValidDate();
-                        startTime = GetValidStartTime();
-                        endTime = GetValidEndTime();
+                        newDate = input.GetDate();
+                        startTime = input.GetStartTime();
+                        endTime = input.GetEndTime();
                         duration = input.GetDuration();
-                        dbManager.UpdateRecord(id, date, startTime, endTime, duration);
+                        dbManager.UpdateRecord(oldDate, newDate, startTime, endTime, duration);
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Press Enter to continue...");
@@ -160,41 +160,6 @@
         static void ViewListOfRecords()
         {
             displayRecords.View();
-        }
-
-        static int GetId()
-        {
-            return Int32.Parse(Console.ReadLine());
-        }
-
-        static string GetValidDate()
-        {
-            while (!dateTimeValidation.IsValidDate(input.GetDate()))
-            {
-                Console.WriteLine("Invalid date! Expected format (mm-dd-yyyy)");
-            }
-
-            return input.Date;
-        }
-
-        static string GetValidStartTime()
-        {
-            while (!dateTimeValidation.IsValidStartTime(input.GetStartTime()))
-            {
-                Console.WriteLine("Invalid time! Expected format (hh:mm)");
-            }
-
-            return input.StartTime;
-        }
-
-        static string GetValidEndTime()
-        {
-            while (!dateTimeValidation.IsValidEndTime(input.GetEndTime()))
-            {
-                Console.WriteLine("Invalid time! Expected format (hh:mm)");
-            }
-
-            return input.EndTime;
         }
     }
 }
