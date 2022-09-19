@@ -58,7 +58,14 @@ namespace CodingTrackerConsole
             DateTime parsedStartTime = DateTime.ParseExact(StartTime, "HH:mm", null, DateTimeStyles.None);
             DateTime parsedEndTime = DateTime.ParseExact(EndTime, "HH:mm", null, DateTimeStyles.None);
 
-            return parsedEndTime.Subtract(parsedStartTime).ToString();
+            TimeSpan duration = parsedEndTime.Subtract(parsedStartTime);
+
+            if (duration < TimeSpan.Zero)
+            {
+                duration += TimeSpan.FromDays(1);
+            }
+
+            return duration.ToString();
         }
     }
 }

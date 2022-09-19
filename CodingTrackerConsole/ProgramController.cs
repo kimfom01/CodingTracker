@@ -33,7 +33,7 @@
                 switch (choice)
                 {
                     case "v":
-                        ViewListOfRecords();
+                        ViewRecords();
                         break;
                     case "i":
                         GetRecordsToInsert();
@@ -67,7 +67,7 @@
 
             dbManager.InsertRecord(date, startTime, endTime, duration);
 
-            ViewListOfRecords();
+            ViewRecords();
         }
 
         static void DisplayDeleteContextMenu()
@@ -79,7 +79,7 @@
         static void GetRecordsToDelete()
         {
             Console.Clear();
-            ViewListOfRecords();
+            ViewRecords();
 
             DisplayDeleteContextMenu();
             string choice = Console.ReadLine();
@@ -89,17 +89,17 @@
                 {
                     case "d":
                         dbManager.DeleteRecord(input.GetDate());
-                        ViewListOfRecords();
+                        ViewRecords();
                         break;
                     default:
                         Console.WriteLine("Invalid Choice!");
-                        ViewListOfRecords();
+                        ViewRecords();
                         break;
                 }
                 DisplayDeleteContextMenu();
                 choice = Console.ReadLine();
             }
-            ViewListOfRecords();
+            ViewRecords();
         }
 
         static void DisplayUpdateContextMenu()
@@ -116,7 +116,7 @@
         static void SelectRecordToUpdate()
         {
             Console.Clear();
-            ViewListOfRecords();
+            ViewAllRecords();
 
             string? newDate, startTime, endTime, duration;
             dbManager.ReadFromDB();
@@ -151,15 +151,22 @@
                         Console.ReadLine();
                         break;
                 }
-                ViewListOfRecords();
+                ViewAllRecords();
                 DisplayUpdateContextMenu();
                 choice = Console.ReadLine();
             }
+
+            Console.Clear();
         }
 
-        static void ViewListOfRecords()
+        static void ViewRecords()
         {
             displayRecords.View();
+        }
+
+        static void ViewAllRecords()
+        {
+            displayRecords.ViewAll();
         }
     }
 }

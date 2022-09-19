@@ -2,12 +2,12 @@
 {
     internal class CodingTrackerModel
     {
-        public string Date { get; set; }
+        public string Date { get; set; } = String.Empty;
 
-        public string StartTime { get; set; }
+        public string StartTime { get; set; } = String.Empty;
 
-        public string EndTime { get; set; }
+        public string EndTime { get; set; } = String.Empty;
 
-        public string Duration { get; set; }
+        public string Duration { get; set; } = String.Empty;
     }
 }
