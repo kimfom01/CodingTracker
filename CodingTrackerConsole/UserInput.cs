@@ -4,19 +4,17 @@ namespace CodingTrackerConsole
 {
     internal class UserInput
     {
-        Validation dateTimeValidation = new();
-        public string Date { get; set; } = string.Empty;
-
-        public string StartTime { get; set; } = string.Empty;
-
-        public string EndTime { get; set; } = string.Empty;
+        readonly Validation _dateTimeValidation = new();
+        private string Date { get; set; } = string.Empty;
+        private string StartTime { get; set; } = string.Empty;
+        private string EndTime { get; set; } = string.Empty;
 
         public string GetDate()
         {
             Console.Write("Enter date (mm-dd-yyyy): ");
             this.Date = Console.ReadLine();
 
-            while (!dateTimeValidation.IsValidDate(this.Date))
+            while (!_dateTimeValidation.IsValidDate(this.Date))
             {
                 Console.WriteLine("Invalid date! Expected format (mm-dd-yyyy)");
                 this.Date = Console.ReadLine();
@@ -30,7 +28,7 @@ namespace CodingTrackerConsole
             Console.Write("Enter start time (hh:mm): ");
             this.StartTime = Console.ReadLine();
 
-            while (!dateTimeValidation.IsValidStartTime(this.StartTime))
+            while (!_dateTimeValidation.IsValidStartTime(this.StartTime))
             {
                 Console.Write("Invalid time! Expected format (hh:mm): ");
                 this.StartTime = Console.ReadLine();
@@ -44,7 +42,7 @@ namespace CodingTrackerConsole
             Console.Write("Enter start time (hh:mm): ");
             this.EndTime = Console.ReadLine();
 
-            while (!dateTimeValidation.IsValidStartTime(this.EndTime))
+            while (!_dateTimeValidation.IsValidStartTime(this.EndTime))
             {
                 Console.Write("Invalid time! Expected format (hh:mm): ");
                 this.EndTime = Console.ReadLine();

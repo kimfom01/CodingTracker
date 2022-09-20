@@ -4,7 +4,7 @@ namespace CodingTrackerConsole
 {
     internal class TableVisualizationEngine
     {
-        readonly DatabaseManager dbManager = new();
+        readonly DatabaseManager _dbManager = new();
 
         public void View()
         {
@@ -14,7 +14,7 @@ namespace CodingTrackerConsole
         {
             Console.Clear();
             ConsoleTableBuilder
-                .From(dbManager.ReadFromDB())
+                .From(_dbManager.ReadFromDb())
                 .ExportAndWriteLine();
 
             Console.WriteLine();
@@ -33,7 +33,7 @@ namespace CodingTrackerConsole
             ViewContextMenu();
             string choice = Console.ReadLine();
 
-            while (choice != "e")
+            while (choice != "b")
             {
 
                 switch (choice)

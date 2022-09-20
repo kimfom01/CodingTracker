@@ -5,7 +5,7 @@ namespace CodingTrackerConsole
 {
     internal class DatabaseManager
     {
-        private string? _connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+        private readonly string? _connectionString = ConfigurationManager.AppSettings.Get("connectionString");
 
         public void CreateDatabase()
         {
@@ -92,7 +92,7 @@ namespace CodingTrackerConsole
             }
         }
 
-        public List<CodingTrackerModel> ReadFromDB()
+        public List<CodingTrackerModel> ReadFromDb()
         {
             List<CodingTrackerModel> codingTrackerModels = new();
 

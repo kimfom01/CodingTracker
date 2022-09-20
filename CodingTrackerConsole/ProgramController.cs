@@ -1,12 +1,12 @@
 ﻿namespace CodingTrackerConsole
 {
-    public class ProgramController
+    public static class ProgramController
     {
-        static DatabaseManager dbManager = new();
-        static UserInput input = new();
-        static TableVisualizationEngine displayRecords = new();
+        private static readonly DatabaseManager DbManager = new();
+        private static readonly UserInput Input = new();
+        private static readonly TableVisualizationEngine DisplayRecords = new();
 
-        static void DisplayMenu()
+        private static void DisplayMenu()
         {
             Console.WriteLine("MAIN MENU");
             Console.WriteLine("---------------------------\n");
@@ -22,9 +22,9 @@
             Console.Write("Your choice? ");
         }
 
-        static public void StartProgram()
+        public static void StartProgram()
         {
-            dbManager.CreateDatabase();
+            DbManager.CreateDatabase();
 
             DisplayMenu();
             string choice = Console.ReadLine();
@@ -53,30 +53,30 @@
             }
         }
 
-        static void GetRecordsToInsert()
+        private static void GetRecordsToInsert()
         {
             Console.Clear();
 
-            string date = input.GetDate();
+            string date = Input.GetDate();
 
-            string startTime = input.GetStartTime();
+            string startTime = Input.GetStartTime();
 
-            string endTime = input.GetEndTime();
+            string endTime = Input.GetEndTime();
 
-            string duration = input.GetDuration();
+            string duration = Input.GetDuration();
 
-            dbManager.InsertRecord(date, startTime, endTime, duration);
+            DbManager.InsertRecord(date, startTime, endTime, duration);
 
             ViewRecords();
         }
 
-        static void DisplayDeleteContextMenu()
+        private static void DisplayDeleteContextMenu()
         {
             Console.WriteLine("b to Go Back");
             Console.WriteLine("d to Delete Record: ");
         }
 
-        static void GetRecordsToDelete()
+        private static void GetRecordsToDelete()
         {
             Console.Clear();
             ViewRecords();
@@ -88,7 +88,7 @@
                 switch (choice)
                 {
                     case "d":
-                        dbManager.DeleteRecord(input.GetDate());
+                        DbManager.DeleteRecord(Input.GetDate());
                         ViewRecords();
                         break;
                     default:
@@ -102,7 +102,7 @@
             ViewRecords();
         }
 
-        static void DisplayUpdateContextMenu()
+        private static void DisplayUpdateContextMenu()
         {
             Console.WriteLine("Choose what to update: ");
             Console.WriteLine("d to Update Date");
@@ -113,15 +113,15 @@
             Console.Write("Your choice? ");
         }
 
-        static void SelectRecordToUpdate()
+        private static void SelectRecordToUpdate()
         {
             Console.Clear();
             ViewAllRecords();
 
             string? newDate, startTime, endTime, duration;
-            dbManager.ReadFromDB();
+            DbManager.ReadFromDb();
 
-            string oldDate = input.GetDate();
+            string oldDate = Input.GetDate();
 
             DisplayUpdateContextMenu();
             string choice = Console.ReadLine();
@@ -130,21 +130,21 @@
                 switch (choice)
                 {
                     case "d":
-                        newDate = input.GetDate();
-                        dbManager.UpdateRecord(oldDate, newDate, null, null, null);
+                        newDate = Input.GetDate();
+                        DbManager.UpdateRecord(oldDate, newDate, null, null, null);
                         break;
                     case "t":
-                        startTime = input.GetStartTime();
-                        endTime = input.GetEndTime();
-                        duration = input.GetDuration();
-                        dbManager.UpdateRecord(oldDate, null, startTime, endTime, duration);
+                        startTime = Input.GetStartTime();
+                        endTime = Input.GetEndTime();
+                        duration = Input.GetDuration();
+                        DbManager.UpdateRecord(oldDate, null, startTime, endTime, duration);
                         break;
                     case "a":
-                        newDate = input.GetDate();
-                        startTime = input.GetStartTime();
-                        endTime = input.GetEndTime();
-                        duration = input.GetDuration();
-                        dbManager.UpdateRecord(oldDate, newDate, startTime, endTime, duration);
+                        newDate = Input.GetDate();
+                        startTime = Input.GetStartTime();
+                        endTime = Input.GetEndTime();
+                        duration = Input.GetDuration();
+                        DbManager.UpdateRecord(oldDate, newDate, startTime, endTime, duration);
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Press Enter to continue...");
@@ -159,14 +159,14 @@
             Console.Clear();
         }
 
-        static void ViewRecords()
+        private static void ViewRecords()
         {
-            displayRecords.View();
+            DisplayRecords.View();
         }
 
-        static void ViewAllRecords()
+        private static void ViewAllRecords()
         {
-            displayRecords.ViewAll();
+            DisplayRecords.ViewAll();
         }
     }
 }
