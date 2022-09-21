@@ -26,9 +26,8 @@ namespace CodingTrackerConsole
                 }
             }
         }
-        
-        // You could pass the object as an argument, which would make the code a bit cleaner. Same for UpdateRecord.
-        public void InsertRecord(string date, string startTime, string endTime, string duration)
+
+        public void InsertRecord(CodingTrackerModel modelRecord)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -37,7 +36,7 @@ namespace CodingTrackerConsole
                     connection.Open();
 
                     command.CommandText = @$"INSERT INTO codingTracker (Date, StartTime, EndTime, Duration)
-                                            VALUES ('{date}', '{startTime}', '{endTime}', '{duration}')";
+                                            VALUES ('{modelRecord.Date}', '{modelRecord.StartTime}', '{modelRecord.Date}', '{modelRecord.Duration}')";
 
                     command.ExecuteNonQuery();
                 }
@@ -58,10 +57,11 @@ namespace CodingTrackerConsole
                     command.ExecuteNonQuery();
                 }
             }
+
             Console.Clear();
         }
 
-        public void UpdateRecord(string oldDate, string? newDate, string? startTime, string? endTime, string? duration)
+        public void UpdateRecord(string oldDate, CodingTrackerModel newRecord)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -69,22 +69,22 @@ namespace CodingTrackerConsole
                 {
                     connection.Open();
 
-                    if (startTime is null && endTime is null)
+                    if (newRecord.StartTime is null && newRecord.EndTime is null)
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET Date = '{newDate}'
+                                                SET Date = '{newRecord.Date}'
                                                 WHERE Date = '{oldDate}'";
                     }
-                    else if (newDate is null)
+                    else if (newRecord.Date is null)
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
+                                                SET StartTime = '{newRecord.StartTime}', EndTime = '{newRecord.EndTime}', Duration = '{newRecord.Duration}'
                                                 WHERE Date = '{oldDate}'";
                     }
                     else
                     {
                         command.CommandText = $@"UPDATE codingTracker
-                                                SET Date = '{newDate}', StartTime = '{startTime}', EndTime = '{endTime}', Duration = '{duration}'
+                                                SET Date = '{newRecord.Date}', StartTime = '{newRecord.StartTime}', EndTime = '{newRecord.EndTime}', Duration = '{newRecord.Duration}'
                                                 WHERE Date = '{oldDate}'";
                     }
 
@@ -111,11 +111,13 @@ namespace CodingTrackerConsole
                     {
                         while (reader.Read())
                         {
-                            var models = new CodingTrackerModel();
-                            models.Date = (string)reader["Date"];
-                            models.StartTime = (string)reader["StartTime"];
-                            models.EndTime = (string)reader["EndTime"];
-                            models.Duration = (string)reader["Duration"];
+                            var models = new CodingTrackerModel
+                            {
+                                Date = (string)reader["Date"],
+                                StartTime = (string)reader["StartTime"],
+                                EndTime = (string)reader["EndTime"],
+                                Duration = (string)reader["Duration"]
+                            };
 
                             codingTrackerModels.Add(models);
                         }

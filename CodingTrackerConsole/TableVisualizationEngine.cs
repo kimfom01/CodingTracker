@@ -4,17 +4,19 @@ namespace CodingTrackerConsole
 {
     internal class TableVisualizationEngine
     {
-        readonly DatabaseManager _dbManager = new();
+        private static readonly DatabaseManager DbManager = new();
+        private static readonly UserInput Input = new();
 
         public void View()
         {
             SelectDataToView();
         }
+
         public void ViewAll()
         {
             Console.Clear();
             ConsoleTableBuilder
-                .From(_dbManager.ReadFromDb())
+                .From(DbManager.ReadFromDb())
                 .ExportAndWriteLine();
 
             Console.WriteLine();
@@ -31,11 +33,10 @@ namespace CodingTrackerConsole
         private void SelectDataToView()
         {
             ViewContextMenu();
-            string choice = Console.ReadLine();
+            string choice = Input.GetChoice();
 
             while (choice != "b")
             {
-
                 switch (choice)
                 {
                     case "a":
@@ -49,6 +50,7 @@ namespace CodingTrackerConsole
                 ViewContextMenu();
                 choice = Console.ReadLine();
             }
+
             Console.Clear();
         }
     }

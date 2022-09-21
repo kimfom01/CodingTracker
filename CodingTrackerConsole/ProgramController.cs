@@ -25,12 +25,10 @@
         public static void StartProgram()
         {
             DbManager.CreateDatabase();
-       
+
             DisplayMenu();
-            string choice = Console.ReadLine();
-            
-            // here you could do choice.trim(), which would get rid of accidental leading or trailing white spaces. You could even compount it with .ToLowerCase(), 
-            // to make the user's life easier and not give them an error if they use upper case
+            string choice = Input.GetChoice();
+
             while (choice != "c")
             {
                 switch (choice)
@@ -51,26 +49,25 @@
                         Console.WriteLine("Wrong input!");
                         break;
                 }
-                // add a line between these statements for better readability. 
+
                 DisplayMenu();
-                choice = Console.ReadLine();
+                choice = Input.GetChoice();
             }
         }
 
         private static void GetRecordsToInsert()
         {
             Console.Clear();
-            
-            // Here I would create a new Object and pass the object to InsertRecord (as per comment in DbManager), this way we use OOP for better organization of code
-            string date = Input.GetDate();
 
-            string startTime = Input.GetStartTime();
+            var modelRecord = new CodingTrackerModel
+            {
+                Date = Input.GetDate(),
+                StartTime = Input.GetTime(),
+                EndTime = Input.GetTime(),
+            };
+            modelRecord.Duration = Input.GetDuration(modelRecord.StartTime, modelRecord.EndTime);
 
-            string endTime = Input.GetEndTime();
-
-            string duration = Input.GetDuration();
-
-            DbManager.InsertRecord(date, startTime, endTime, duration);
+            DbManager.InsertRecord(modelRecord);
 
             ViewRecords();
         }
@@ -87,7 +84,7 @@
             ViewRecords();
 
             DisplayDeleteContextMenu();
-            string choice = Console.ReadLine();
+            string choice = Input.GetChoice();
             while (choice != "b")
             {
                 switch (choice)
@@ -101,9 +98,11 @@
                         ViewRecords();
                         break;
                 }
+
                 DisplayDeleteContextMenu();
-                choice = Console.ReadLine();
+                choice = Input.GetChoice();
             }
+
             ViewRecords();
         }
 
@@ -123,42 +122,45 @@
             Console.Clear();
             ViewAllRecords();
 
-            string? newDate, startTime, endTime, duration;
             DbManager.ReadFromDb();
 
+            Console.WriteLine("Select which record to update (by date)");
             string oldDate = Input.GetDate();
 
             DisplayUpdateContextMenu();
-            string choice = Console.ReadLine();
+            string choice = Input.GetChoice();
+
             while (choice != "b")
             {
+                CodingTrackerModel newRecord = new CodingTrackerModel();
                 switch (choice)
                 {
                     case "d":
-                        newDate = Input.GetDate();
-                        DbManager.UpdateRecord(oldDate, newDate, null, null, null);
+                        newRecord.Date = Input.GetDate();
+                        DbManager.UpdateRecord(oldDate, newRecord);
                         break;
                     case "t":
-                        startTime = Input.GetStartTime();
-                        endTime = Input.GetEndTime();
-                        duration = Input.GetDuration();
-                        DbManager.UpdateRecord(oldDate, null, startTime, endTime, duration);
+                        newRecord.StartTime = Input.GetTime();
+                        newRecord.EndTime = Input.GetTime();
+                        newRecord.Duration = Input.GetDuration(newRecord.StartTime, newRecord.EndTime);
+                        DbManager.UpdateRecord(oldDate, newRecord);
                         break;
                     case "a":
-                        newDate = Input.GetDate();
-                        startTime = Input.GetStartTime();
-                        endTime = Input.GetEndTime();
-                        duration = Input.GetDuration();
-                        DbManager.UpdateRecord(oldDate, newDate, startTime, endTime, duration);
+                        newRecord.Date = Input.GetDate();
+                        newRecord.StartTime = Input.GetTime();
+                        newRecord.EndTime = Input.GetTime();
+                        newRecord.Duration = Input.GetDuration(newRecord.StartTime, newRecord.EndTime);
+                        DbManager.UpdateRecord(oldDate, newRecord);
                         break;
                     default:
                         Console.WriteLine("Invalid choice! Press Enter to continue...");
                         Console.ReadLine();
                         break;
                 }
+
                 ViewAllRecords();
                 DisplayUpdateContextMenu();
-                choice = Console.ReadLine();
+                choice = Input.GetChoice();
             }
 
             Console.Clear();
