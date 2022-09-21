@@ -25,9 +25,12 @@
         public static void StartProgram()
         {
             DbManager.CreateDatabase();
-
+       
             DisplayMenu();
             string choice = Console.ReadLine();
+            
+            // here you could do choice.trim(), which would get rid of accidental leading or trailing white spaces. You could even compount it with .ToLowerCase(), 
+            // to make the user's life easier and not give them an error if they use upper case
             while (choice != "c")
             {
                 switch (choice)
@@ -48,6 +51,7 @@
                         Console.WriteLine("Wrong input!");
                         break;
                 }
+                // add a line between these statements for better readability. 
                 DisplayMenu();
                 choice = Console.ReadLine();
             }
@@ -56,7 +60,8 @@
         private static void GetRecordsToInsert()
         {
             Console.Clear();
-
+            
+            // Here I would create a new Object and pass the object to InsertRecord (as per comment in DbManager), this way we use OOP for better organization of code
             string date = Input.GetDate();
 
             string startTime = Input.GetStartTime();

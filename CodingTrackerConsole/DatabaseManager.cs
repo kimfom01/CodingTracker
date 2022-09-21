@@ -26,7 +26,8 @@ namespace CodingTrackerConsole
                 }
             }
         }
-
+        
+        // You could pass the object as an argument, which would make the code a bit cleaner. Same for UpdateRecord.
         public void InsertRecord(string date, string startTime, string endTime, string duration)
         {
             using (var connection = new SqliteConnection(_connectionString))
