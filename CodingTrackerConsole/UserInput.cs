@@ -3,8 +3,12 @@
 namespace CodingTrackerConsole
 {
     internal class UserInput
-    {
+    {   
+        
         readonly Validation _dateTimeValidation = new();
+        
+        // I don't think this class needs properties at all, you could create local variables inside the methods
+        
         private string Date { get; set; } = string.Empty;
         private string StartTime { get; set; } = string.Empty;
         private string EndTime { get; set; } = string.Empty;
@@ -25,6 +29,8 @@ namespace CodingTrackerConsole
 
         public string GetStartTime()
         {
+            // here you could just create a var time and go from there. This way you don't need to use properties. 
+            // Also, since the code is pretty much identical, you could have just one GetTime() method which would be used to get the value of both Start and End Times
             Console.Write("Enter start time (hh:mm): ");
             this.StartTime = Console.ReadLine();
 
