@@ -4,7 +4,7 @@ namespace CodingTrackerConsole
 {
     internal class Validation
     {
-        public static bool IsValidDate(string date)
+        public bool IsValidDate(string date)
         {
             return DateOnly.TryParseExact(date, "MM-dd-yyyy", out _);
         }

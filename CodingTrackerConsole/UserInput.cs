@@ -11,7 +11,7 @@ namespace CodingTrackerConsole
             Console.Write("Enter date (mm-dd-yyyy): ");
             var date = Console.ReadLine();
 
-            while (!Validation.IsValidDate(date))
+            while (!_dateTimeValidation.IsValidDate(date))
             {
                 Console.WriteLine("Invalid date! Expected format (mm-dd-yyyy)");
                 date = Console.ReadLine();
