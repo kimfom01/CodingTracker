@@ -11,7 +11,7 @@ namespace CodingTrackerConsole
             Console.Write("Enter date (mm-dd-yyyy): ");
             var date = Console.ReadLine();
 
-            while (!_dateTimeValidation.IsValidDate(date))
+            while (!Validation.IsValidDate(date))
             {
                 Console.WriteLine("Invalid date! Expected format (mm-dd-yyyy)");
                 date = Console.ReadLine();
@@ -22,10 +22,10 @@ namespace CodingTrackerConsole
 
         public string GetTime()
         {
-            Console.Write("Enter start time (hh:mm): ");
+            Console.Write("Enter time (hh:mm): ");
             var time = Console.ReadLine();
 
-            while (!_dateTimeValidation.IsValidStartTime(time))
+            while (!_dateTimeValidation.IsValidTime(time))
             {
                 Console.Write("Invalid time! Expected format (hh:mm): ");
                 time = Console.ReadLine();

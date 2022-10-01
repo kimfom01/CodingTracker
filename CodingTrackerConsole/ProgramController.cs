@@ -81,7 +81,7 @@
         private static void GetRecordsToDelete()
         {
             Console.Clear();
-            ViewRecords();
+            ViewAllRecords();
 
             DisplayDeleteContextMenu();
             string choice = Input.GetChoice();
@@ -91,11 +91,11 @@
                 {
                     case "d":
                         DbManager.DeleteRecord(Input.GetDate());
-                        ViewRecords();
+                        ViewAllRecords();
                         break;
                     default:
                         Console.WriteLine("Invalid Choice!");
-                        ViewRecords();
+                        ViewAllRecords();
                         break;
                 }
 
@@ -103,7 +103,7 @@
                 choice = Input.GetChoice();
             }
 
-            ViewRecords();
+            ViewAllRecords();
         }
 
         private static void DisplayUpdateContextMenu()

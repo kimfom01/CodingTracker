@@ -48,7 +48,7 @@ namespace CodingTrackerConsole
                 }
 
                 ViewContextMenu();
-                choice = Console.ReadLine();
+                choice = Input.GetChoice();
             }
 
             Console.Clear();

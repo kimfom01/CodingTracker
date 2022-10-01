@@ -36,7 +36,7 @@ namespace CodingTrackerConsole
                     connection.Open();
 
                     command.CommandText = @$"INSERT INTO codingTracker (Date, StartTime, EndTime, Duration)
-                                            VALUES ('{modelRecord.Date}', '{modelRecord.StartTime}', '{modelRecord.Date}', '{modelRecord.Duration}')";
+                                            VALUES ('{modelRecord.Date}', '{modelRecord.StartTime}', '{modelRecord.EndTime}', '{modelRecord.Duration}')";
 
                     command.ExecuteNonQuery();
                 }
