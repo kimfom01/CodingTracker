@@ -36,5 +36,3 @@ Console based CRUD application to keep track of coding hours. Developed using C#
 * [Using a Configuration Manager](https://docs.microsoft.com/en-us/troubleshoot/dotnet/csharp/store-custom-information-config-file)
 * [Parsing DateTime in C#](https://stackoverflow.com/questions/371987/how-to-validate-a-datetime-in-c)
 
-# In Other News
-* [Buy Me A Coffee](https://www.buymeacoffee.com/kimfom01)
