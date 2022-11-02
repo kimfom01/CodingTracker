@@ -35,4 +35,3 @@ Console based CRUD application to keep track of coding hours. Developed using C#
 * [ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
 * [Using a Configuration Manager](https://docs.microsoft.com/en-us/troubleshoot/dotnet/csharp/store-custom-information-config-file)
 * [Parsing DateTime in C#](https://stackoverflow.com/questions/371987/how-to-validate-a-datetime-in-c)
-
