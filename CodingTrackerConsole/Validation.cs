@@ -2,7 +2,7 @@
 
 namespace CodingTrackerConsole
 {
-    internal class Validation
+    public class Validation
     {
         public bool IsValidDate(string date)
         {
