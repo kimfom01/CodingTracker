@@ -2,7 +2,7 @@
 
 namespace CodingTrackerConsole
 {
-    internal class UserInput
+    public class UserInput
     {
         private readonly Validation _dateTimeValidation = new();
 
