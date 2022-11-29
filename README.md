@@ -2,7 +2,7 @@
 
 Console based CRUD application to keep track of coding hours. Developed using C# and SQLite.
 
-# Given Requirements
+## Given Requirements
 - [x] Same requirements as [HabitTrackerApp](https://github.com/kimfom01/HabitTrackerApp), except that now you'll be logging your daily coding time.
 - [x] To show the data on the console, you should use the ["ConsoleTableExt"](https://github.com/minhhungit/ConsoleTableExt) library.
 - [x] You're required to have separate classes in different files (ex. UserInput.cs, Validation.cs, CodingController.cs)
@@ -18,20 +18,20 @@ Console based CRUD application to keep track of coding hours. Developed using C#
 * Create reports where the users can see their total and average coding session per period.
 * Create the ability to set coding goals and show how far the users are from reaching their goal, along with how many hours a day they would have to code to reach their goal. You can do it via SQL queries or with C#.
 
-# Features
+## Features
 * SQLite database connection
     - The program uses a SQLite db connection to store and read information.
     - If no database exists, or the correct table does not exist they will be created.
 * CRUD DB functions
     - From the main menu users can Create, Read, Update or Delete entries.
     
-# Things I learnt
+## Things I learnt
 * Parsing DateTime
 * Seperation of concerns
 * Using an external library
 * Getting connection string from an external source (config file)
 
-# Resources
+## Resources
 * [ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
 * [Using a Configuration Manager](https://docs.microsoft.com/en-us/troubleshoot/dotnet/csharp/store-custom-information-config-file)
 * [Parsing DateTime in C#](https://stackoverflow.com/questions/371987/how-to-validate-a-datetime-in-c)
