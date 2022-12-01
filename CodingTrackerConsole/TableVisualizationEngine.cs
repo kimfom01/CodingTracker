@@ -7,16 +7,17 @@ namespace CodingTrackerConsole
         private static readonly DatabaseManager DbManager = new();
         private static readonly UserInput Input = new();
 
-        public void View()
+        public void View<TTableData>(List<TTableData> dataList)
         {
-            SelectDataToView();
+            SelectDataToView(dataList);
         }
 
-        public void ViewAll()
+        public void BuildTable<TTableData>(List<TTableData> dataList) where TTableData : class
         {
             Console.Clear();
             ConsoleTableBuilder
-                .From(DbManager.ReadFromDb())
+                // .From(DbManager.ReadFromDb())
+                .From(dataList)
                 .ExportAndWriteLine();
 
             Console.WriteLine();
@@ -30,7 +31,7 @@ namespace CodingTrackerConsole
             Console.Write("Your choice? ");
         }
 
-        private void SelectDataToView()
+        private void SelectDataToView<TTableData>(List<TTableData> dataList)
         {
             ViewContextMenu();
             string choice = Input.GetChoice();
@@ -40,7 +41,9 @@ namespace CodingTrackerConsole
                 switch (choice)
                 {
                     case "a":
-                        ViewAll();
+                        View(dataList);
+                        break;
+                    case "":
                         break;
                     default:
                         Console.WriteLine("Invalid Choice! Enter choice from menu...");
