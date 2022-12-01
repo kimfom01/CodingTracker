@@ -82,7 +82,7 @@ public static class ProgramController
     private static void GetRecordsToDelete()
     {
         Console.Clear();
-        ViewAllRecords();
+        ViewRecords();
 
         DisplayDeleteContextMenu();
         string choice = Input.GetChoice();
@@ -92,11 +92,11 @@ public static class ProgramController
             {
                 case "d":
                     DbManager.DeleteRecord(Input.GetDate());
-                    ViewAllRecords();
+                    ViewRecords();
                     break;
                 default:
                     Console.WriteLine("Invalid Choice!");
-                    ViewAllRecords();
+                    ViewRecords();
                     break;
             }
 
@@ -104,7 +104,7 @@ public static class ProgramController
             choice = Input.GetChoice();
         }
 
-        ViewAllRecords();
+        ViewRecords();
     }
 
     private static void DisplayUpdateContextMenu()
@@ -121,9 +121,9 @@ public static class ProgramController
     private static void SelectRecordToUpdate()
     {
         Console.Clear();
-        ViewAllRecords();
+        ViewRecords();
 
-        DbManager.ReadFromDb();
+        // DbManager.ReadFromDb();
 
         Console.WriteLine("Select which record to update (by date)");
         string oldDate = Input.GetDate();
@@ -159,7 +159,7 @@ public static class ProgramController
                     break;
             }
 
-            ViewAllRecords();
+            ViewRecords();
             DisplayUpdateContextMenu();
             choice = Input.GetChoice();
         }
