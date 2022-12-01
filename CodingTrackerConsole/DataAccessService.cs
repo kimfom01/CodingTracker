@@ -2,7 +2,7 @@ namespace CodingTrackerConsole;
 
 public class DataAccessService
 {
-    public List<CodingTrackerModel> LoadData()
+    public static List<CodingTrackerModel> LoadData()
     {
         var databaseManager = new DatabaseManager();
 
