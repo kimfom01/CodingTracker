@@ -7,16 +7,15 @@ namespace CodingTrackerConsole
         private static readonly DatabaseManager DbManager = new();
         private static readonly UserInput Input = new();
 
-        public void View<TTableData>(List<TTableData> dataList)
+        public void View(List<CodingTrackerModel> dataList)
         {
             SelectDataToView(dataList);
         }
 
-        public void BuildTable<TTableData>(List<TTableData> dataList) where TTableData : class
+        public void BuildTable(List<CodingTrackerModel> dataList)
         {
             Console.Clear();
             ConsoleTableBuilder
-                // .From(DbManager.ReadFromDb())
                 .From(dataList)
                 .ExportAndWriteLine();
 
@@ -31,7 +30,7 @@ namespace CodingTrackerConsole
             Console.Write("Your choice? ");
         }
 
-        private void SelectDataToView<TTableData>(List<TTableData> dataList)
+        private void SelectDataToView(List<CodingTrackerModel> dataList)
         {
             ViewContextMenu();
             string choice = Input.GetChoice();
@@ -41,7 +40,7 @@ namespace CodingTrackerConsole
                 switch (choice)
                 {
                     case "a":
-                        View(dataList);
+                        BuildTable(dataList);
                         break;
                     case "":
                         break;
