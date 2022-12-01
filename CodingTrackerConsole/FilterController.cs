@@ -10,8 +10,9 @@ public class FilterController
         Console.WriteLine("y to filter by years");
     }
 
-    public void Filter(List<CodingTrackerModel> dataList, string filter)
+    public List<CodingTrackerModel> Filter(List<CodingTrackerModel> dataList, string filter)
     {
+        var output = new List<CodingTrackerModel>();
         ShowFilterMenu();
         var choice = _input.GetChoice();
         while (choice != "b")
@@ -19,13 +20,13 @@ public class FilterController
             switch (choice)
             {
                 case "d":
-                    FilterByDays(dataList, filter);
+                    output = FilterByDays(dataList, filter);
                     break;
                 case "m":
-                    FilterByMonths(dataList, filter);
+                    output = FilterByMonths(dataList, filter);
                     break;
                 case "y":
-                    FilterByYears(dataList, filter);
+                    output = FilterByYears(dataList, filter);
                     break;
                 default:
                     Console.WriteLine("Wrong input!");
@@ -35,6 +36,8 @@ public class FilterController
             ShowFilterMenu();
             choice = _input.GetChoice();
         }
+
+        return output;
     }
 
     private List<CodingTrackerModel> FilterByDays(List<CodingTrackerModel> dataList, string filter)
