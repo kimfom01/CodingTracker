@@ -5,7 +5,8 @@ public static class ProgramController
     private static readonly DatabaseManager DbManager = new();
     private static readonly UserInput Input = new();
     private static readonly TableVisualizationEngine DisplayRecords = new();
-    private static List<CodingTrackerModel> CurrentData = DataAccessService.LoadData();
+    private static readonly List<CodingTrackerModel> CurrentData = DataAccessService.LoadData(); // ************ //
+    private static readonly FilterController FilterController = new();
 
     private static void DisplayMenu()
     {
@@ -123,8 +124,6 @@ public static class ProgramController
         Console.Clear();
         ViewRecords();
 
-        // DbManager.ReadFromDb();
-
         Console.WriteLine("Select which record to update (by date)");
         string oldDate = Input.GetDate();
 
@@ -169,11 +168,15 @@ public static class ProgramController
 
     private static void ViewRecords()
     {
-        DisplayRecords.View(CurrentData);
-    }
+        Console.WriteLine("Do you wish to filter");
+        var ans = Input.GetChoice();
+        if (ans == "no")
+        {
+            DisplayRecords.View(CurrentData);
+            return;
+        }
 
-    private static void ViewAllRecords()
-    {
-        // DisplayRecords.ViewAll();
+        var filteredList = FilterController.Filter(CurrentData);
+        DisplayRecords.View(filteredList);
     }
 }
