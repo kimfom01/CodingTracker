@@ -1,6 +1,6 @@
 ﻿namespace CodingTrackerConsole
 {
-    internal class CodingTrackerModel
+    public class CodingTrackerModel
     {
         public string? Date { get; set; }
 
