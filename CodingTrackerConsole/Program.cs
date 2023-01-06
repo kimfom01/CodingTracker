@@ -1,10 +1,9 @@
-﻿namespace CodingTrackerConsole
+﻿namespace CodingTrackerConsole;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            ProgramController.StartProgram();
-        }
+        ProgramController.StartProgram();
     }
 }

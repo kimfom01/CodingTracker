@@ -5,7 +5,7 @@ public static class ProgramController
     private static readonly DatabaseManager DbManager = new();
     private static readonly UserInput Input = new();
     private static readonly TableVisualizationEngine DisplayRecords = new();
-    private static readonly List<CodingTrackerModel> CurrentData = DataAccessService.LoadData(); // ************ //
+    private static List<CodingTrackerModel> _currentData = new();
     private static readonly FilterController FilterController = new();
 
     private static void DisplayMenu()
@@ -71,7 +71,7 @@ public static class ProgramController
 
         DbManager.InsertRecord(modelRecord);
 
-        ViewRecords();
+        DisplayTable();
     }
 
     private static void DisplayDeleteContextMenu()
@@ -83,7 +83,7 @@ public static class ProgramController
     private static void GetRecordsToDelete()
     {
         Console.Clear();
-        ViewRecords();
+        DisplayTable();
 
         DisplayDeleteContextMenu();
         string choice = Input.GetChoice();
@@ -93,19 +93,22 @@ public static class ProgramController
             {
                 case "d":
                     DbManager.DeleteRecord(Input.GetDate());
-                    ViewRecords();
                     break;
                 default:
                     Console.WriteLine("Invalid Choice!");
-                    ViewRecords();
                     break;
             }
-
+            
+            DisplayTable();
             DisplayDeleteContextMenu();
             choice = Input.GetChoice();
         }
+    }
 
-        ViewRecords();
+    private static void DisplayTable()
+    {
+        LoadCurrentDataFromDb();
+        DisplayRecords.BuildTable(_currentData);
     }
 
     private static void DisplayUpdateContextMenu()
@@ -122,7 +125,7 @@ public static class ProgramController
     private static void SelectRecordToUpdate()
     {
         Console.Clear();
-        ViewRecords();
+        DisplayTable();
 
         Console.WriteLine("Select which record to update (by date)");
         string oldDate = Input.GetDate();
@@ -158,7 +161,7 @@ public static class ProgramController
                     break;
             }
 
-            ViewRecords();
+            DisplayTable();
             DisplayUpdateContextMenu();
             choice = Input.GetChoice();
         }
@@ -168,15 +171,21 @@ public static class ProgramController
 
     private static void ViewRecords()
     {
-        Console.WriteLine("Do you wish to filter");
+        LoadCurrentDataFromDb();
+        Console.WriteLine("Do you wish to filter (yes/no)");
         var ans = Input.GetChoice();
         if (ans == "no")
         {
-            DisplayRecords.View(CurrentData);
+            DisplayRecords.View(_currentData);
             return;
         }
 
-        var filteredList = FilterController.Filter(CurrentData);
+        var filteredList = FilterController.Filter(_currentData);
         DisplayRecords.View(filteredList);
+    }
+
+    private static void LoadCurrentDataFromDb()
+    {
+        _currentData = DataAccessService.LoadData();
     }
 }
